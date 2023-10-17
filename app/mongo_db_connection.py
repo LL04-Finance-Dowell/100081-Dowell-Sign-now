@@ -3,7 +3,7 @@ import time
 from datetime import datetime
 
 import requests
-import multiprocessing
+# import multiprocessing
 
 from app.constants import (
     SIGNNOW_DOCUMENT_CONNECTION_DICT,

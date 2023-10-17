@@ -1,5 +1,7 @@
 """Third Party Services"""
-DOWELLCONNECTION_URL = "https://uxlivinglab.pythonanywhere.com/"
+# DOWELLCONNECTION_URL = "https://uxlivinglab.pythonanywhere.com/"
+# https://dowellfileuploader.uxlivinglab.online/uploadfiles/upload-pdf-file/
+DOWELLCONNECTION_URL = "https://dowellfileuploader.uxlivinglab.online/"
 
 """Database Collection Information"""
 

@@ -3,6 +3,7 @@ import json
 import os
 import re
 import uuid  # Import the uuid library
+import git
 
 import requests
 from django.core.cache import cache
@@ -15,7 +16,12 @@ from app.mongo_db_connection import (
     save_to_signnow_document_collection,
 )
 
-
+@api_view(["GET"])
+def home(request):
+    "Is server down? I though not!"
+    return Response(
+        "If you are seeing this :), the server is !down.", status.HTTP_200_OK
+    )
 
 @api_view(["POST"])
 def create_signnow_document(request):
