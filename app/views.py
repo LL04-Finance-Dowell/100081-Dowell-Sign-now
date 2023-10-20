@@ -46,25 +46,17 @@ def create_signnow_document(request):
                 {
                     "file_name": "Untitled Document",
                     "pdf_url": pdf_url,
+                    # "created_by": request.data["created_by"],
+                    # "company_id": organization_id,
+                    # "data_type": request.data["data_type"],
+                    # "auth_viewers": viewers,
                 }
             )
         )
+        print(res)
         if res["isSuccess"]:
-            return Response({"pdf_url": pdf_url}, status.HTTP_201_CREATED,)
+            return Response(
+                {"_id": res["inserted_id"], "pdf_url": pdf_url}, status.HTTP_201_CREATED,)
     else:
         return Response({'error': 'Failed to upload the PDF'}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
          
-
-    
-# @api_view(["POST"])
-# def create_signnow_document(request):
-#     if 'pdf' not in request.FILES:
-#         return Response({'error': 'No PDF file was submitted'}, status=status.HTTP_400_BAD_REQUEST)
-
-#     pdf_file = request.FILES['pdf']
-#     pdf_url = upload_pdf_and_get_url(pdf_file)
-
-#     if pdf_url:
-#         return Response({'file_url': pdf_url}, status=status.HTTP_201_CREATED)
-#     else:
-#         return Response({'error': 'Failed to upload the PDF'}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
