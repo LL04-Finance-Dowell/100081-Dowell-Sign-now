@@ -32,6 +32,7 @@ ALLOWED_HOSTS = [
     "localhost",
     "dowellfileuploader.uxlivinglab.online",
     '127.0.0.1',
+    "100081.pythonanywhere.com",
 ]
 
 
