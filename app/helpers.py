@@ -1,3 +1,6 @@
+import json
+from rest_framework import status
+from rest_framework.response import Response
 import requests
 
 def upload_pdf_and_get_url(pdf_file):
@@ -20,6 +23,8 @@ def upload_pdf_and_get_url(pdf_file):
                 return f"Error: Response is not in JSON format - {response.text}"
         else:
             return f"Error: {response.status_code} - {response.text}"
-    except Exception as e:
-        return f"Error: {str(e)}"
+    except json.JSONDecodeError:
+        return Response(
+            "Invalid response data", status.HTTP_500_INTERNAL_SERVER_ERROR
+        )
 
