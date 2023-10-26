@@ -17,7 +17,8 @@ from app.mongo_db_connection import (
     save_to_signnow_document_collection,
 )
 from app.helpers import(
-    upload_pdf_and_get_url
+    # upload_pdf_and_get_url
+    validate_id
 )
 
 @api_view(["GET"])
@@ -37,20 +38,23 @@ def create_signnow_document(request):
                 {"message": "Failed to get signnow document information."},
                 status=status.HTTP_200_OK,
             )
-        if 'pdf' not in request.FILES:
-            return Response({'error': 'No PDF file was submitted'}, status=status.HTTP_400_BAD_REQUEST)
-        pdf_file = request.FILES['pdf']
-        pdf_url = upload_pdf_and_get_url(pdf_file)
+        organization_id = request.data["company_id"]
+        print(organization_id)
+        if not validate_id(organization_id):
+            return Response("Invalid company details", status.HTTP_400_BAD_REQUEST)
+        pdf_url = request.data["pdf"]
+        viewers = [{"member": request.data["created_by"], "portfolio": request.data["portfolio"]}]
+        print(viewers)
         if pdf_url:
             res = json.loads(
                 save_to_signnow_document_collection(
                     {
                         "file_name": "Untitled Document",
                         "pdf_url": pdf_url,
-                        # "created_by": request.data["created_by"],
-                        # "company_id": organization_id,
-                        # "data_type": request.data["data_type"],
-                        # "auth_viewers": viewers,
+                        "company_id": organization_id,
+                        "created_by": request.data["created_by"],
+                        "data_type": request.data["data_type"],
+                        "auth_viewers": viewers,
                     }
                 )
             )
@@ -66,3 +70,9 @@ def create_signnow_document(request):
         return Response(
             "Invalid response data", status.HTTP_500_INTERNAL_SERVER_ERROR
         )
+    
+
+    # if 'pdf' not in request.FILES:
+        #     return Response({'error': 'No PDF file was submitted'}, status=status.HTTP_400_BAD_REQUEST)
+        # pdf_file = request.FILES['pdf']
+        # pdf_url = upload_pdf_and_get_url(pdf_file)

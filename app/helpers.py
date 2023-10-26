@@ -1,4 +1,5 @@
 import json
+import bson
 from rest_framework import status
 from rest_framework.response import Response
 import requests
@@ -28,3 +29,11 @@ def upload_pdf_and_get_url(pdf_file):
             "Invalid response data", status.HTTP_500_INTERNAL_SERVER_ERROR
         )
 
+def validate_id(id):
+    try:
+        if bson.objectid.ObjectId.is_valid(id):
+            return True
+        else:
+            return None
+    except:
+        return None
