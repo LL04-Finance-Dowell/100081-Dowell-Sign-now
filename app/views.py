@@ -65,7 +65,7 @@ def create_signnow_document(request):
             else:
                 return Response({'error': 'Failed to save to SignNow collection'}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
         else:
-            return Response({'error': 'Failed to upload the PDF'}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+            return Response({'error': 'Failed to get PDF URL'}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
     except json.JSONDecodeError:
         return Response(
             "Invalid response data", status.HTTP_500_INTERNAL_SERVER_ERROR
